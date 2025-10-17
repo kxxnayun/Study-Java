@@ -7,7 +7,7 @@ public class Tic_Tac_Toe {
         char[][] board = new char[3][3];
         int x, y;
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -25,8 +25,8 @@ public class Tic_Tac_Toe {
             }
 
             System.out.println("다음 수의 좌표를 입력하시오: ");
-            x = scanner.nextInt();
-            y = scanner.nextInt();
+            x = scan.nextInt();
+            y = scan.nextInt();
 
             if (board[x][y] != ' ') {
                 System.out.println("잘못된 위치입니다. ");
