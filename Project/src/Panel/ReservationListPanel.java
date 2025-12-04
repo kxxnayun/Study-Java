@@ -54,7 +54,7 @@ public class ReservationListPanel extends JPanel {
         bottomPanel.setBackground(Color.WHITE);
         bottomPanel.setPreferredSize(new Dimension(500, 80));
 
-        JButton backBtn = new JButton("← 메인으로");
+        JButton backBtn = new JButton("메인으로");
         backBtn.setPreferredSize(new Dimension(150, 50));
         backBtn.setFont(new Font("맑은 고딕", Font.BOLD, 16));
         backBtn.setBackground(new Color(100, 100, 100));

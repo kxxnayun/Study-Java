@@ -11,7 +11,6 @@ public class ReservationConfirmPanel extends JPanel {
     private JLabel movieTitleLabel;
     private JLabel peopleLabel;
     private JLabel seatsLabel;
-    private JLabel priceLabel;
 
     public ReservationConfirmPanel(MainFrame frame) {
         this.frame = frame;
@@ -60,23 +59,18 @@ public class ReservationConfirmPanel extends JPanel {
                 BorderFactory.createLineBorder(new Color(220, 220, 220), 1),
                 BorderFactory.createEmptyBorder(25, 25, 25, 25)
         ));
-        cardPanel.setMaximumSize(new Dimension(400, 300));
+        cardPanel.setMaximumSize(new Dimension(400, 260));
         cardPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         movieTitleLabel = createInfoLabel("영화: ", "");
         peopleLabel = createInfoLabel("인원: ", "");
         seatsLabel = createInfoLabel("좌석: ", "");
-        priceLabel = createInfoLabel("총 금액: ", "");
 
         cardPanel.add(movieTitleLabel);
         cardPanel.add(Box.createVerticalStrut(15));
         cardPanel.add(peopleLabel);
         cardPanel.add(Box.createVerticalStrut(15));
         cardPanel.add(seatsLabel);
-        cardPanel.add(Box.createVerticalStrut(15));
-        cardPanel.add(new JSeparator());
-        cardPanel.add(Box.createVerticalStrut(15));
-        cardPanel.add(priceLabel);
 
         infoPanel.add(cardPanel);
         centerWrapper.add(infoPanel);
@@ -119,9 +113,5 @@ public class ReservationConfirmPanel extends JPanel {
 
         String seats = String.join(", ", data.getSelectedSeats());
         seatsLabel.setText("좌석: " + (seats.isEmpty() ? "미선택" : seats));
-
-        priceLabel.setText("총 금액: " + String.format("%,d원", data.getTotalPrice()));
-        priceLabel.setFont(new Font("맑은 고딕", Font.BOLD, 18));
-        priceLabel.setForeground(new Color(230, 0, 35));
     }
 }

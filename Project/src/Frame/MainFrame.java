@@ -71,5 +71,6 @@ public class MainFrame extends JFrame {
 
     public void resetReservation() {
         reservationData.reset();
+        seatSelectPanel.resetAll();
     }
 }

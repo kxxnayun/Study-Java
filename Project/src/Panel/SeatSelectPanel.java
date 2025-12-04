@@ -47,7 +47,6 @@ public class SeatSelectPanel extends JPanel {
             final int count = i;
             memBtn.addActionListener(e -> {
                 maxSeats = count;
-                resetSeats();
                 selectedInfoLabel.setText("선택된 좌석: 0/" + maxSeats);
 
                 if (selectedNumberButton != null) {
@@ -107,7 +106,7 @@ public class SeatSelectPanel extends JPanel {
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnPanel.setBackground(Color.WHITE);
 
-        JButton backBtn = new JButton("← 이전");
+        JButton backBtn = new JButton("이전");
         backBtn.setPreferredSize(new Dimension(120, 45));
         backBtn.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
         backBtn.setBackground(new Color(150, 150, 150));
@@ -115,11 +114,10 @@ public class SeatSelectPanel extends JPanel {
         backBtn.setFocusPainted(false);
         backBtn.setBorderPainted(false);
         backBtn.addActionListener(e -> {
-            resetSeats();
             frame.switchPage("MOVIE_LIST");
         });
 
-        JButton goToConfirmBtn = new JButton("다음 →");
+        JButton goToConfirmBtn = new JButton("다음");
         goToConfirmBtn.setPreferredSize(new Dimension(120, 45));
         goToConfirmBtn.setFont(new Font("맑은 고딕", Font.BOLD, 16));
         goToConfirmBtn.setBackground(new Color(230, 0, 35));
@@ -154,22 +152,9 @@ public class SeatSelectPanel extends JPanel {
         btn.setForeground(Color.BLACK);
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);
-        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         Color defaultColor = new Color(220, 220, 220);
         Color hoverColor = new Color(200, 200, 200);
-
-        btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent e) {
-                if (btn != selectedNumberButton) btn.setBackground(hoverColor);
-            }
-
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent e) {
-                if (btn != selectedNumberButton) btn.setBackground(defaultColor);
-            }
-        });
 
         return btn;
     }
@@ -192,7 +177,6 @@ public class SeatSelectPanel extends JPanel {
         seat.setForeground(Color.BLACK);
         seat.setFocusPainted(false);
         seat.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-        seat.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         seat.addActionListener(e -> {
             if (selectedSeats.contains(seatName)) {
@@ -217,13 +201,22 @@ public class SeatSelectPanel extends JPanel {
         return seat;
     }
 
-    private void resetSeats() {
+    public void resetAll() {
+        maxSeats = 1;
         selectedSeats.clear();
+        selectedInfoLabel.setText("선택된 좌석: 0/1");
+
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 8; j++) {
                 seatButtons[i][j].setBackground(new Color(220, 220, 220));
                 seatButtons[i][j].setForeground(Color.BLACK);
             }
         }
+
+        if (selectedNumberButton != null) {
+            resetButtonColor(selectedNumberButton);
+            selectedNumberButton = null;
+        }
     }
+
 }

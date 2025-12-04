@@ -25,12 +25,12 @@ public class MovieListPanel extends JPanel {
 
         add(headerPanel, BorderLayout.NORTH);
 
-        // 영화 목록 패널 (스크롤 가능)
+        // 영화 목록 패널
         JPanel moviesPanel = new JPanel(new GridLayout(3, 2, 15, 15));
         moviesPanel.setBackground(Color.WHITE);
         moviesPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // 샘플 영화 데이터
+        // 영화 데이터
         String[][] movies = {
                 {"주토피아 2", "애니메이션/모험", "전체", "Zootopia.png"},
                 {"나우 유 씨미 3", "범죄/미스터리", "12세", "NowYouSeeMe.png"},
@@ -45,24 +45,20 @@ public class MovieListPanel extends JPanel {
             moviesPanel.add(movieCard);
         }
 
-        JScrollPane scrollPane = new JScrollPane(moviesPanel);
-        scrollPane.setBorder(null);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        add(scrollPane, BorderLayout.CENTER);
+        add(moviesPanel, BorderLayout.CENTER);
 
         // 하단 버튼
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.WHITE);
         bottomPanel.setPreferredSize(new Dimension(500, 70));
 
-        JButton backBtn = new JButton("← 메인으로");
+        JButton backBtn = new JButton("메인으로");
         backBtn.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
         backBtn.setPreferredSize(new Dimension(150, 45));
         backBtn.setBackground(new Color(100, 100, 100));
         backBtn.setForeground(Color.WHITE);
         backBtn.setFocusPainted(false);
         backBtn.setBorderPainted(false);
-        backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backBtn.addActionListener(e -> frame.switchPage("MAIN"));
 
         bottomPanel.add(backBtn);
@@ -77,13 +73,11 @@ public class MovieListPanel extends JPanel {
                 BorderFactory.createLineBorder(new Color(220, 220,  220), 1),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
-        card.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         JLabel posterLabel = new JLabel();
         posterLabel.setPreferredSize(new Dimension(80, 110));
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/resources/posters/" + posterName));
-        System.out.println("RESOURCE CHECK = " + getClass().getResource("/poster/" + posterName));
 
         Image img = icon.getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH);
         posterLabel.setIcon(new ImageIcon(img));
@@ -118,16 +112,6 @@ public class MovieListPanel extends JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 frame.getReservationData().setMovieTitle(title);
                 frame.switchPage("SEAT");
-            }
-
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                card.setBackground(new Color(250, 250, 250));
-                infoPanel.setBackground(new Color(250, 250, 250));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                card.setBackground(Color.WHITE);
-                infoPanel.setBackground(Color.WHITE);
             }
         });
 
