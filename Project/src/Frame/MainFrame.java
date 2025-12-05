@@ -34,8 +34,6 @@ public class MainFrame extends JFrame {
         setTitle("CGV 영화 예매");
         setSize(500, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
 
         reservationData = new ReservationData();
 

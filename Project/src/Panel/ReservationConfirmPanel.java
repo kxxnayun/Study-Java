@@ -88,7 +88,6 @@ public class ReservationConfirmPanel extends JPanel {
         goToMainBtn.setForeground(Color.WHITE);
         goToMainBtn.setFocusPainted(false);
         goToMainBtn.setBorderPainted(false);
-        goToMainBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         goToMainBtn.addActionListener(e -> {
             frame.resetReservation();
             frame.switchPage("MAIN");

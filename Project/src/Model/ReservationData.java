@@ -8,15 +8,12 @@ public class ReservationData {
     private String movieTime;
     private int peopleCount;
     private List<String> selectedSeats;
-    private int totalPrice;
 
     public ReservationData() {
         this.selectedSeats = new ArrayList<>();
         this.peopleCount = 0;
-        this.totalPrice = 0;
     }
 
-    // Getters and Setters
     public String getMovieTitle() {
         return movieTitle;
     }
@@ -39,7 +36,6 @@ public class ReservationData {
 
     public void setPeopleCount(int peopleCount) {
         this.peopleCount = peopleCount;
-        calculateTotalPrice();
     }
 
     public List<String> getSelectedSeats() {
@@ -60,20 +56,10 @@ public class ReservationData {
         selectedSeats.remove(seat);
     }
 
-    public int getTotalPrice() {
-        return totalPrice;
-    }
-
-    private void calculateTotalPrice() {
-        // 1인당 12,000원으로 계산
-        this.totalPrice = peopleCount * 12000;
-    }
-
     public void reset() {
         this.movieTitle = null;
         this.movieTime = null;
         this.peopleCount = 0;
         this.selectedSeats.clear();
-        this.totalPrice = 0;
     }
 }
