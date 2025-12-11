@@ -1,10 +1,12 @@
 package Panel;
 
 import Frame.MainFrame;
-import java.util.ArrayList;
-import java.util.List;
+import dao.ReservationDAO;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SeatSelectPanel extends JPanel {
 
@@ -15,9 +17,13 @@ public class SeatSelectPanel extends JPanel {
     private MainFrame frame;
     private List<JButton> numberButtons = new ArrayList<>();
     private JButton selectedNumberButton = null;
+    private int movieId;
+    private ReservationDAO reservationDAO = new ReservationDAO();
 
-    public SeatSelectPanel(MainFrame frame) {
+    public SeatSelectPanel(MainFrame frame, int movieId) {
         this.frame = frame;
+        this.movieId = movieId;
+
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
@@ -93,6 +99,8 @@ public class SeatSelectPanel extends JPanel {
 
         add(centerPanel, BorderLayout.CENTER);
 
+        disableReservedSeats();
+
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(Color.WHITE);
         bottomPanel.setPreferredSize(new Dimension(500, 100));
@@ -113,9 +121,7 @@ public class SeatSelectPanel extends JPanel {
         backBtn.setForeground(Color.WHITE);
         backBtn.setFocusPainted(false);
         backBtn.setBorderPainted(false);
-        backBtn.addActionListener(e -> {
-            frame.switchPage("MOVIE_LIST");
-        });
+        backBtn.addActionListener(e -> frame.switchPage("MOVIE_LIST"));
 
         JButton goToConfirmBtn = new JButton("다음");
         goToConfirmBtn.setPreferredSize(new Dimension(120, 45));
@@ -128,12 +134,9 @@ public class SeatSelectPanel extends JPanel {
             if (selectedSeats.size() == maxSeats) {
                 frame.getReservationData().setPeopleCount(maxSeats);
                 frame.getReservationData().setSelectedSeats(new ArrayList<>(selectedSeats));
-                frame.switchPage("CONFIRM");
+                frame.goToConfirmPage();
             } else {
-                JOptionPane.showMessageDialog(this,
-                        "인원 수만큼 좌석을 선택해주세요!",
-                        "알림",
-                        JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "인원 수만큼 좌석을 선택해주세요!", "알림", JOptionPane.WARNING_MESSAGE);
             }
         });
 
@@ -144,6 +147,19 @@ public class SeatSelectPanel extends JPanel {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
+    private void disableReservedSeats() {
+        List<String> reservedSeats = reservationDAO.getReservedSeats(movieId);
+        for (String seat : reservedSeats) {
+            char rowChar = seat.charAt(0);
+            int rowIndex = rowChar - 'A';
+            int colIndex = Integer.parseInt(seat.substring(1)) - 1;
+
+            seatButtons[rowIndex][colIndex].setEnabled(false);
+            seatButtons[rowIndex][colIndex].setBackground(Color.GRAY);
+            seatButtons[rowIndex][colIndex].setForeground(Color.WHITE);
+        }
+    }
+
     private JButton createNumberButton(String text) {
         JButton btn = new JButton(text);
         btn.setPreferredSize(new Dimension(60, 60));
@@ -152,10 +168,6 @@ public class SeatSelectPanel extends JPanel {
         btn.setForeground(Color.BLACK);
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);
-
-        Color defaultColor = new Color(220, 220, 220);
-        Color hoverColor = new Color(200, 200, 200);
-
         return btn;
     }
 
@@ -189,10 +201,7 @@ public class SeatSelectPanel extends JPanel {
                     seat.setBackground(new Color(230, 0, 35));
                     seat.setForeground(Color.WHITE);
                 } else {
-                    JOptionPane.showMessageDialog(this,
-                            "최대 " + maxSeats + "석까지 선택 가능합니다!",
-                            "알림",
-                            JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "최대 " + maxSeats + "석까지 선택 가능합니다!", "알림", JOptionPane.WARNING_MESSAGE);
                 }
             }
             selectedInfoLabel.setText("선택된 좌석: " + selectedSeats.size() + "/" + maxSeats);
@@ -210,6 +219,7 @@ public class SeatSelectPanel extends JPanel {
             for (int j = 0; j < 8; j++) {
                 seatButtons[i][j].setBackground(new Color(220, 220, 220));
                 seatButtons[i][j].setForeground(Color.BLACK);
+                seatButtons[i][j].setEnabled(true);
             }
         }
 
@@ -217,6 +227,7 @@ public class SeatSelectPanel extends JPanel {
             resetButtonColor(selectedNumberButton);
             selectedNumberButton = null;
         }
-    }
 
+        disableReservedSeats();
+    }
 }

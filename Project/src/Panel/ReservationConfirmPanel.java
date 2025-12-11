@@ -2,6 +2,8 @@ package Panel;
 
 import Frame.MainFrame;
 import Model.ReservationData;
+import dao.ReservationDAO;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,9 +13,13 @@ public class ReservationConfirmPanel extends JPanel {
     private JLabel movieTitleLabel;
     private JLabel peopleLabel;
     private JLabel seatsLabel;
+    private int movieId;
+    private ReservationDAO reservationDAO = new ReservationDAO();
 
-    public ReservationConfirmPanel(MainFrame frame) {
+    public ReservationConfirmPanel(MainFrame frame, int movieId) {
         this.frame = frame;
+        this.movieId = movieId;
+
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
@@ -25,7 +31,6 @@ public class ReservationConfirmPanel extends JPanel {
         headerLabel.setFont(new Font("맑은 고딕", Font.BOLD, 24));
         headerLabel.setForeground(Color.WHITE);
         headerPanel.add(headerLabel);
-
         add(headerPanel, BorderLayout.NORTH);
 
         JPanel centerWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 40));
@@ -74,7 +79,6 @@ public class ReservationConfirmPanel extends JPanel {
 
         infoPanel.add(cardPanel);
         centerWrapper.add(infoPanel);
-
         add(centerWrapper, BorderLayout.CENTER);
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 20));
@@ -89,6 +93,7 @@ public class ReservationConfirmPanel extends JPanel {
         goToMainBtn.setFocusPainted(false);
         goToMainBtn.setBorderPainted(false);
         goToMainBtn.addActionListener(e -> {
+            saveReservationToDB();
             frame.resetReservation();
             frame.switchPage("MAIN");
         });
@@ -112,5 +117,12 @@ public class ReservationConfirmPanel extends JPanel {
 
         String seats = String.join(", ", data.getSelectedSeats());
         seatsLabel.setText("좌석: " + (seats.isEmpty() ? "미선택" : seats));
+    }
+
+    private void saveReservationToDB() {
+        ReservationData data = frame.getReservationData();
+        for (String seat : data.getSelectedSeats()) {
+            reservationDAO.insertReservation(movieId, seat);
+        }
     }
 }

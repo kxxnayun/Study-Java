@@ -1,11 +1,9 @@
 package Panel;
 
 import Frame.MainFrame;
-import Model.Movie;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class MovieListPanel extends JPanel {
 
@@ -13,7 +11,6 @@ public class MovieListPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
 
-        // 상단 헤더
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(new Color(230, 0, 35));
         headerPanel.setPreferredSize(new Dimension(500, 60));
@@ -22,15 +19,12 @@ public class MovieListPanel extends JPanel {
         headerLabel.setFont(new Font("맑은 고딕", Font.BOLD, 24));
         headerLabel.setForeground(Color.WHITE);
         headerPanel.add(headerLabel);
-
         add(headerPanel, BorderLayout.NORTH);
 
-        // 영화 목록 패널
         JPanel moviesPanel = new JPanel(new GridLayout(3, 2, 15, 15));
         moviesPanel.setBackground(Color.WHITE);
         moviesPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // 영화 데이터
         String[][] movies = {
                 {"주토피아 2", "애니메이션/모험", "전체", "Zootopia.png"},
                 {"나우 유 씨미 3", "범죄/미스터리", "12세", "NowYouSeeMe.png"},
@@ -40,14 +34,14 @@ public class MovieListPanel extends JPanel {
                 {"인터스텔라", "SF/드라마", "12세", "Interstellar.png"}
         };
 
-        for (String[] movieData : movies) {
-            JPanel movieCard = createMovieCard(movieData[0], movieData[1], movieData[2], movieData[3], frame);
+        for (int i = 0; i < movies.length; i++) {
+            int movieId = i + 1;
+            JPanel movieCard = createMovieCard(movies[i], frame, movieId);
             moviesPanel.add(movieCard);
         }
 
         add(moviesPanel, BorderLayout.CENTER);
 
-        // 하단 버튼
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.WHITE);
         bottomPanel.setPreferredSize(new Dimension(500, 70));
@@ -65,12 +59,17 @@ public class MovieListPanel extends JPanel {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    private JPanel createMovieCard(String title, String info, String rating, String posterName, MainFrame frame) {
+    private JPanel createMovieCard(String[] movieData, MainFrame frame, int movieId) {
+        String title = movieData[0];
+        String info = movieData[1];
+        String rating = movieData[2];
+        String posterName = movieData[3];
+
         JPanel card = new JPanel();
         card.setLayout(new BorderLayout(10, 10));
         card.setBackground(Color.WHITE);
         card.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(220, 220,  220), 1),
+                BorderFactory.createLineBorder(new Color(220, 220, 220), 1),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
 
@@ -78,7 +77,6 @@ public class MovieListPanel extends JPanel {
         posterLabel.setPreferredSize(new Dimension(80, 110));
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/resources/posters/" + posterName));
-
         Image img = icon.getImage().getScaledInstance(80, 110, Image.SCALE_SMOOTH);
         posterLabel.setIcon(new ImageIcon(img));
 
@@ -111,7 +109,7 @@ public class MovieListPanel extends JPanel {
         card.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 frame.getReservationData().setMovieTitle(title);
-                frame.switchPage("SEAT");
+                frame.goToSeatSelect(movieId);
             }
         });
 

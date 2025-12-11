@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationData {
+
+    private int movieId;
     private String movieTitle;
     private String movieTime;
     private int peopleCount;
@@ -12,6 +14,14 @@ public class ReservationData {
     public ReservationData() {
         this.selectedSeats = new ArrayList<>();
         this.peopleCount = 0;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
     public String getMovieTitle() {
@@ -57,6 +67,7 @@ public class ReservationData {
     }
 
     public void reset() {
+        this.movieId = 0;
         this.movieTitle = null;
         this.movieTime = null;
         this.peopleCount = 0;

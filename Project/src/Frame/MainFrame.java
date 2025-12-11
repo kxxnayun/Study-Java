@@ -22,6 +22,7 @@ public class MainFrame extends JFrame {
     private ReservationListPanel reservationListPanel;
 
     private ReservationData reservationData;
+    private int selectedMovieId;
 
     public MainFrame() {
 
@@ -42,23 +43,36 @@ public class MainFrame extends JFrame {
 
         mainPanel = new MainPanel(this);
         movieListPanel = new MovieListPanel(this);
-        seatSelectPanel = new SeatSelectPanel(this);
-        reservationConfirmPanel = new ReservationConfirmPanel(this);
         reservationListPanel = new ReservationListPanel(this);
+
+        seatSelectPanel = null;
+        reservationConfirmPanel = null;
 
         cardPanel.add(mainPanel, "MAIN");
         cardPanel.add(movieListPanel, "MOVIE_LIST");
-        cardPanel.add(seatSelectPanel, "SEAT");
-        cardPanel.add(reservationConfirmPanel, "CONFIRM");
         cardPanel.add(reservationListPanel, "RESERVATION_LIST");
 
         add(cardPanel);
         setVisible(true);
     }
 
+    public void goToSeatSelect(int movieId) {
+        selectedMovieId = movieId;
+        seatSelectPanel = new SeatSelectPanel(this, movieId);
+        cardPanel.add(seatSelectPanel, "SEAT");
+        cardLayout.show(cardPanel, "SEAT");
+    }
+
+    public void goToConfirmPage() {
+        reservationConfirmPanel = new ReservationConfirmPanel(this, selectedMovieId);
+        reservationConfirmPanel.updateReservationInfo();
+        cardPanel.add(reservationConfirmPanel, "CONFIRM");
+        cardLayout.show(cardPanel, "CONFIRM");
+    }
+
     public void switchPage(String name) {
-        if (name.equals("CONFIRM")) {
-            reservationConfirmPanel.updateReservationInfo();
+        if (name.equals("RESERVATION_LIST")) {
+            reservationListPanel.updateList();
         }
         cardLayout.show(cardPanel, name);
     }
@@ -67,8 +81,14 @@ public class MainFrame extends JFrame {
         return reservationData;
     }
 
+    public int getSelectedMovieId() {
+        return selectedMovieId;
+    }
+
     public void resetReservation() {
         reservationData.reset();
-        seatSelectPanel.resetAll();
+        if (seatSelectPanel != null) {
+            seatSelectPanel.resetAll();
+        }
     }
 }
