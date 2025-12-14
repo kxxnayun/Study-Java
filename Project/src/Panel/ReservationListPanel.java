@@ -49,7 +49,6 @@ public class ReservationListPanel extends JPanel {
         backBtn.setForeground(Color.WHITE);
         backBtn.setFocusPainted(false);
         backBtn.setBorderPainted(false);
-        backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         backBtn.addActionListener(e -> mainFrame.switchPage("MAIN"));
 
         bottomPanel.add(backBtn);

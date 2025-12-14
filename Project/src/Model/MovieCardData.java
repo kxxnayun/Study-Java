@@ -8,7 +8,7 @@ public class MovieCardData {
     private String rating;
     private int runningTime;
     private List<String> showtimes;
-    private String posterColor; // 포스터 대신 색상으로 구분
+    private String posterColor;
 
     public MovieCardData(String title, String genre, String rating, int runningTime,
                          List<String> showtimes, String posterColor) {
@@ -20,7 +20,6 @@ public class MovieCardData {
         this.posterColor = posterColor;
     }
 
-    // Getters
     public String getTitle() {
         return title;
     }

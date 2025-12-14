@@ -56,16 +56,6 @@ public class ReservationData {
         this.selectedSeats = selectedSeats;
     }
 
-    public void addSeat(String seat) {
-        if (!selectedSeats.contains(seat)) {
-            selectedSeats.add(seat);
-        }
-    }
-
-    public void removeSeat(String seat) {
-        selectedSeats.remove(seat);
-    }
-
     public void reset() {
         this.movieId = 0;
         this.movieTitle = null;

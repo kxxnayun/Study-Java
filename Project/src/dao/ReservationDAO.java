@@ -9,7 +9,6 @@ import java.util.List;
 
 public class ReservationDAO {
 
-    // 예약 저장
     public void insertReservation(int movieId, String seat) {
         String sql = "INSERT INTO reservations (movie_id, seat) VALUES (?, ?)";
 
@@ -25,7 +24,6 @@ public class ReservationDAO {
         }
     }
 
-    // 영화 예약된 좌석 목록 조회
     public List<String> getReservedSeats(int movieId) {
         List<String> seats = new ArrayList<>();
         String sql = "SELECT seat FROM reservations WHERE movie_id = ?";
@@ -47,7 +45,6 @@ public class ReservationDAO {
         return seats;
     }
 
-    // 전체 예약 목록 조회
     public List<Reservation> getAllReservations() {
         List<Reservation> list = new ArrayList<>();
         String sql = "SELECT * FROM reservations ORDER BY reserved_at DESC";

@@ -108,6 +108,7 @@ public class MovieListPanel extends JPanel {
 
         card.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
+                frame.getReservationData().setMovieId(movieId);
                 frame.getReservationData().setMovieTitle(title);
                 frame.goToSeatSelect(movieId);
             }

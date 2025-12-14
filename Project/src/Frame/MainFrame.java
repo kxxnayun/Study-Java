@@ -64,7 +64,7 @@ public class MainFrame extends JFrame {
     }
 
     public void goToConfirmPage() {
-        reservationConfirmPanel = new ReservationConfirmPanel(this, selectedMovieId);
+        reservationConfirmPanel = new ReservationConfirmPanel(this);
         reservationConfirmPanel.updateReservationInfo();
         cardPanel.add(reservationConfirmPanel, "CONFIRM");
         cardLayout.show(cardPanel, "CONFIRM");

@@ -13,12 +13,10 @@ public class ReservationConfirmPanel extends JPanel {
     private JLabel movieTitleLabel;
     private JLabel peopleLabel;
     private JLabel seatsLabel;
-    private int movieId;
     private ReservationDAO reservationDAO = new ReservationDAO();
 
-    public ReservationConfirmPanel(MainFrame frame, int movieId) {
+    public ReservationConfirmPanel(MainFrame frame) {
         this.frame = frame;
-        this.movieId = movieId;
 
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
@@ -121,6 +119,8 @@ public class ReservationConfirmPanel extends JPanel {
 
     private void saveReservationToDB() {
         ReservationData data = frame.getReservationData();
+        int movieId = data.getMovieId();
+
         for (String seat : data.getSelectedSeats()) {
             reservationDAO.insertReservation(movieId, seat);
         }
