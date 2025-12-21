@@ -3,7 +3,9 @@ package dao;
 import db.DBManager;
 import Model.Reservation;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,12 @@ public class ReservationDAO {
 
     public List<Reservation> getAllReservations() {
         List<Reservation> list = new ArrayList<>();
-        String sql = "SELECT * FROM reservations ORDER BY reserved_at DESC";
+
+        String sql =
+                "SELECT r.id, m.title, r.seat " +
+                        "FROM reservations r " +
+                        "JOIN movies m ON r.movie_id = m.id " +
+                        "ORDER BY r.id DESC";
 
         try (Connection conn = DBManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
@@ -56,9 +63,8 @@ public class ReservationDAO {
             while (rs.next()) {
                 list.add(new Reservation(
                         rs.getInt("id"),
-                        rs.getInt("movie_id"),
-                        rs.getString("seat"),
-                        rs.getTimestamp("reserved_at").toString()
+                        rs.getString("title"),
+                        rs.getString("seat")
                 ));
             }
 

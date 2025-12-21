@@ -1,31 +1,26 @@
 package Model;
 
 public class Reservation {
-    private int id;
-    private int movieId;
-    private String seat;
-    private String reservedAt;
 
-    public Reservation(int id, int movieId, String seat, String reservedAt) {
+    private int id;
+    private String movieTitle;
+    private String seat;
+
+    public Reservation(int id, String movieTitle, String seat) {
         this.id = id;
-        this.movieId = movieId;
+        this.movieTitle = movieTitle;
         this.seat = seat;
-        this.reservedAt = reservedAt;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getMovieId() {
-        return movieId;
+    public String getMovieTitle() {
+        return movieTitle;
     }
 
     public String getSeat() {
         return seat;
-    }
-
-    public String getReservedAt() {
-        return reservedAt;
     }
 }

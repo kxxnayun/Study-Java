@@ -121,6 +121,9 @@ public class ReservationConfirmPanel extends JPanel {
         ReservationData data = frame.getReservationData();
         int movieId = data.getMovieId();
 
+        System.out.println("movieId = " + movieId);
+        System.out.println("seats = " + data.getSelectedSeats());
+
         for (String seat : data.getSelectedSeats()) {
             reservationDAO.insertReservation(movieId, seat);
         }

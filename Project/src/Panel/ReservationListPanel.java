@@ -35,10 +35,9 @@ public class ReservationListPanel extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(listPanel);
         scrollPane.setBorder(null);
-        scrollPane.setBackground(Color.WHITE);
         add(scrollPane, BorderLayout.CENTER);
 
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.WHITE);
         bottomPanel.setPreferredSize(new Dimension(500, 80));
 
@@ -87,20 +86,16 @@ public class ReservationListPanel extends JPanel {
                 item.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
                 item.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
 
-                JLabel movieLabel = new JLabel("영화 ID: " + r.getMovieId());
+                JLabel movieLabel = new JLabel("영화: " + r.getMovieTitle());
                 movieLabel.setFont(new Font("맑은 고딕", Font.BOLD, 16));
 
                 JLabel seatLabel = new JLabel("좌석: " + r.getSeat());
                 seatLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 
-                JLabel timeLabel = new JLabel("예매 시간: " + r.getReservedAt());
-                timeLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-
                 item.add(movieLabel);
                 item.add(Box.createVerticalStrut(5));
                 item.add(seatLabel);
                 item.add(Box.createVerticalStrut(5));
-                item.add(timeLabel);
 
                 listPanel.add(item);
                 listPanel.add(Box.createVerticalStrut(10));
